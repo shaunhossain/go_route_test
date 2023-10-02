@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_route_test/core/page_name.dart';
+import 'package:go_router/go_router.dart';
 
 class TabViewOnePage extends StatelessWidget {
   const TabViewOnePage({super.key});
@@ -17,6 +18,9 @@ class TabViewOnePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(TabPagesName.tabPageView1.title),
+            ElevatedButton(
+                onPressed: () => context.push("/${PagesName.detailsPage.path}"),
+                child: const Text("go to details")),
           ],
         ),
       ),

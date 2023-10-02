@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_route_test/core/page_name.dart';
-import 'package:go_route_test/presentation/navigation/bottom_navigation_root_page.dart';
+import 'package:go_route_test/presentation/navigation/main_page.dart';
 import 'package:go_route_test/presentation/navigation/tab_root_page.dart';
 import 'package:go_route_test/presentation/ui/details_page.dart';
 import 'package:go_route_test/presentation/ui/home_page.dart';
@@ -20,7 +20,7 @@ final _shellNavigatorProfileKey =
 final _shellNavigatorSettingKey =
     GlobalKey<NavigatorState>(debugLabel: 'shellSetting');
 final _shellNavigatorTabPageKey =
-GlobalKey<NavigatorState>(debugLabel: 'shellTab');
+    GlobalKey<NavigatorState>(debugLabel: 'shellTab');
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -34,7 +34,7 @@ final GoRouter router = GoRouter(
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return BottomNavigationRootPage(navigationShell: navigationShell);
+        return MainPage(navigationShell: navigationShell);
       },
       branches: [
         StatefulShellBranch(
@@ -65,7 +65,7 @@ final GoRouter router = GoRouter(
                       child: ProfilePage(),
                     ),
                 redirect: (context, state) {
-                  if (3 == 3) {
+                  if (3 == 2) {
                     return PagesName.authPage.path;
                   }
                   return PagesName.profilePage.path;
@@ -81,7 +81,8 @@ final GoRouter router = GoRouter(
                 return navigationShell;
               },
               navigatorContainerBuilder: (BuildContext context,
-                  StatefulNavigationShell navigationShell, List<Widget> children) {
+                  StatefulNavigationShell navigationShell,
+                  List<Widget> children) {
                 return TabRootPage(
                     navigationShell: navigationShell, children: children);
               },
@@ -90,21 +91,21 @@ final GoRouter router = GoRouter(
                   GoRoute(
                     path: TabPagesName.tabPageView1.path,
                     builder: (BuildContext context, GoRouterState state) =>
-                    const TabViewOnePage(),
+                        const TabViewOnePage(),
                   ),
                 ]),
                 StatefulShellBranch(routes: [
                   GoRoute(
                     path: TabPagesName.tabPageView2.path,
                     builder: (BuildContext context, GoRouterState state) =>
-                    const TabViewTwoPage(),
+                        const TabViewTwoPage(),
                   ),
                 ]),
                 StatefulShellBranch(routes: [
                   GoRoute(
                     path: TabPagesName.tabPageView3.path,
                     builder: (BuildContext context, GoRouterState state) =>
-                    const TabViewThreePage(),
+                        const TabViewThreePage(),
                   ),
                 ]),
               ],
@@ -124,8 +125,7 @@ final GoRouter router = GoRouter(
             navigationShell: navigationShell, children: children);
       },
       branches: [
-        StatefulShellBranch(
-            routes: [
+        StatefulShellBranch(routes: [
           GoRoute(
             path: TabPagesName.tabPageView1.path,
             builder: (BuildContext context, GoRouterState state) =>
@@ -136,19 +136,25 @@ final GoRouter router = GoRouter(
           GoRoute(
             path: TabPagesName.tabPageView2.path,
             builder: (BuildContext context, GoRouterState state) =>
-            const TabViewTwoPage(),
+                const TabViewTwoPage(),
           ),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
             path: TabPagesName.tabPageView3.path,
             builder: (BuildContext context, GoRouterState state) =>
-            const TabViewThreePage(),
+                const TabViewThreePage(),
           ),
         ]),
       ],
     ),
     GoRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+      path: '/details',
+      builder: (context, state) => const DetailsPage(),
+    ),
+    GoRoute(
+      parentNavigatorKey: _rootNavigatorKey,
       path: PagesName.authPage.path,
       builder: (BuildContext context, GoRouterState state) {
         return const AuthPage();
