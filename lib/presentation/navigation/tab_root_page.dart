@@ -29,22 +29,90 @@ class _TabRootPageState extends State<TabRootPage>
 
   @override
   Widget build(BuildContext context) {
-    final List<Tab> tabs = widget.children
-        .mapIndexed((int i, _) => Tab(text: TabPagesName.values[i].title))
+    final List<MaterialButton> tab1 = widget.children
+        .mapIndexed((int i, _) => MaterialButton(
+              color: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              onPressed: () {
+                _onTabTap(context, i);
+              },
+              child: Text(TabPagesName.values[i].title),
+            ))
         .toList();
 
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text('TabView'),
-          bottom: TabBar(
-            controller: _tabController,
-            tabs: tabs,
-            onTap: (int tappedIndex) => _onTabTap(context, tappedIndex),
-          )),
-      body: TabBarView(
-        controller: _tabController,
-        children: widget.children,
-      ),
+    // final list2 = list1Copy.sublist(0, list1Copy.length ~/ 2);
+    // final list3 = list1Copy.sublist(list1Copy.length ~/ 2);
+
+    final List<MaterialButton> tab2 = widget.children
+        .sublist(widget.children.length ~/ 2)
+        .mapIndexed((int i, _) => MaterialButton(
+              height: 10,
+              color: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              onPressed: () {
+                _onTabTap(context, i + 2);
+              },
+              child: FittedBox(child: Text(TabPagesName.values[i].title,style: const TextStyle(fontSize: 8),)),
+            ))
+        .toList();
+
+    return SafeArea(
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (context, value) {
+            return [
+              SliverToBoxAdapter(
+                  child:    Container(
+                    width: double.maxFinite,
+                    height: 400,
+                    color: Colors.pink,
+                  ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  width: double.maxFinite,
+                  height: 120,
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 3,
+                    childAspectRatio: 3.5,
+                    mainAxisSpacing: 6,
+                    crossAxisSpacing: 6,
+                    padding: const EdgeInsets.all(8.0), // padding around the grid
+                    children: tab1.map((item) {
+                      return item;
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: CustomScrollView(
+            slivers:  [
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 600,
+                    child: TabBarView(
+                      physics: const ScrollPhysics(),
+                      controller: _tabController,
+                      children: widget.children,
+                    ),
+                  ),
+                ),
+              SliverToBoxAdapter(
+                  child: Container(
+                    width: double.maxFinite,
+                    height: 400,
+                    color: Colors.pink,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
     );
   }
 

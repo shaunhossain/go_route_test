@@ -10,6 +10,9 @@ import 'package:go_route_test/presentation/ui/splash_page.dart';
 import 'package:go_route_test/presentation/ui/tab/tab_view_1.dart';
 import 'package:go_route_test/presentation/ui/tab/tab_view_2.dart';
 import 'package:go_route_test/presentation/ui/tab/tab_view_3.dart';
+import 'package:go_route_test/presentation/ui/tab/tab_view_4.dart';
+import 'package:go_route_test/presentation/ui/tab/tab_view_5.dart';
+import 'package:go_route_test/presentation/ui/tab/tab_view_6.dart';
 import 'package:go_router/go_router.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -106,6 +109,27 @@ final GoRouter router = GoRouter(
                     path: TabPagesName.tabPageView3.path,
                     builder: (BuildContext context, GoRouterState state) =>
                         const TabViewThreePage(),
+                  ),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                    path: TabPagesName.tabPageView4.path,
+                    builder: (BuildContext context, GoRouterState state) =>
+                    const TabViewFourPage(),
+                  ),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                    path: TabPagesName.tabPageView5.path,
+                    builder: (BuildContext context, GoRouterState state) =>
+                    const TabViewFivePage(),
+                  ),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                    path: TabPagesName.tabPageView6.path,
+                    builder: (BuildContext context, GoRouterState state) =>
+                    const TabViewSixPage(),
                   ),
                 ]),
               ],
