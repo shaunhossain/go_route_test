@@ -7,21 +7,30 @@ class TabViewFourPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController controller = ScrollController();
     return Scaffold(
-      body: CustomScrollView(
-        shrinkWrap: false,
+      body: SingleChildScrollView(
+        controller: controller,
         physics: const NeverScrollableScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: ListView.builder(
-              shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 40,
-                itemBuilder: (context, index) {
-                  return Text("data -> $index");
-                }),
-          ),
-        ],
+        child: Column(
+         children: [
+           ListView.builder(
+             controller: controller,
+               shrinkWrap: true,
+               physics: const ScrollPhysics(),
+               itemCount: 41,
+               itemBuilder: (context, index) {
+               if(index == 40){
+                 return Container(
+                   width: double.maxFinite,
+                   height: 400,
+                   color: Colors.blueAccent,
+                 );
+               }
+                 return Text("data -> $index");
+               }),
+         ]
+        ),
       ),
     );
   }
